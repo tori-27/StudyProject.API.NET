@@ -12,7 +12,7 @@ namespace StudyProject.Data
 
         }
         public DbSet<Hotel> Hotels { get; set; }   
-        public DbSet<Country> Contries { get; set; }
+        public DbSet<Country> Countries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
