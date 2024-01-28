@@ -1,16 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StudyProject.Configurations;
-using StudyProject.Contracts;
 using StudyProject.Data;
-using StudyProject.Repository;
+using StudyProject.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("HotelListingDbConnectionString");
-builder.Services.AddDbContext<HotelListingDbContext>(options =>
+var connectionString = builder.Configuration.GetConnectionString("KubernetesListingDbConnectionString");
+builder.Services.AddDbContext<KubernetesListingDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
@@ -32,8 +32,10 @@ builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console().ReadFrom.Configuration
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
+//builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+//builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
+
+builder.Services.AddSingleton<KubernetesClientService>();
 
 var app = builder.Build();
 
